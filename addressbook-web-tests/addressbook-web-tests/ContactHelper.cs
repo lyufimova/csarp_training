@@ -7,20 +7,23 @@ namespace WebAddressbookTests
         public ContactHelper(IWebDriver driver) : base(driver)
         {
         }
-        public void SubmitContactForm()
+        public ContactHelper SubmitContactForm()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
-        public void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            return this;
         }
-        public void GoToAddNewPage()
+        public ContactHelper GoToAddNewPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
     }
 }
