@@ -21,17 +21,34 @@ namespace WebAddressbookTests
             options.BrowserExecutableLocation = @"C:\Program Files\Mozilla Firefox EST\firefox.exe";
             options.UseLegacyImplementation = true;
 
-     
-            driver = new FirefoxDriver(options);
-            baseURL = "http://localhost/";
 
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            driver = new FirefoxDriver(options);
+            baseURL = "http://localhost";
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
         }
 
-        public void Stop() {
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
+        }
+
+        public string BaseURL
+        {
+            get
+            {
+                return baseURL;
+            }
+        }
+
+        public void Stop()
+        {
             try
             {
                 driver.Quit();
@@ -44,10 +61,10 @@ namespace WebAddressbookTests
 
         public LoginHelper Auth
         {
-        get
+            get
             {
                 return loginHelper;
-                    }
+            }
         }
         public NavigationHelper Navigator
         {
@@ -74,5 +91,7 @@ namespace WebAddressbookTests
             }
 
         }
+
+
     }
 }

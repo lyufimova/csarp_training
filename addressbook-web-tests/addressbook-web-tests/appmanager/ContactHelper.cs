@@ -4,8 +4,19 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager menager)
+            : base(menager)
         {
+        }
+
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToGroupPage();
+
+            GoToAddNewPage();
+            FillContactForm(contact);
+            SubmitContactForm();
+            return this;
         }
         public ContactHelper SubmitContactForm()
         {

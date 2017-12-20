@@ -1,11 +1,46 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
     public class GroupHelper : HelperBase
     {
-        public GroupHelper(IWebDriver driver) : base(driver)
+        public GroupHelper(ApplicationManager menager) : base(menager)
         {
+        }
+
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupPage();
+
+            InitGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper Remove(int v)
+        {
+            manager.Navigator.GoToGroupPage();
+
+            SelectGroup(v);
+            RemovalGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper SelectGroup(int v)
+        {
+            string xpath = "(//input[@name='selected[]'])[" + v + "]";
+            driver.FindElement(By.XPath(xpath)).Click();
+            return this;
+        }
+
+        public GroupHelper RemovalGroup()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+            return this;
         }
 
         public GroupHelper ReturnToGroupsPage()
