@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -18,6 +19,28 @@ namespace WebAddressbookTests
             SubmitContactForm();
             return this;
         }
+
+        public ContactHelper Modify(int v, ContactData newData)
+        {
+            EditContact(v);
+            FillContactForm(newData);
+            UpdateContactForm();
+            return this;
+        }
+
+        public ContactHelper UpdateContactForm()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper EditContact(int v)
+        {
+            string xpath = "(//img[@title='Edit'])[" + v + "]";
+            driver.FindElement(By.XPath(xpath)).Click();
+            return this;
+        }
+
         public ContactHelper SubmitContactForm()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -36,5 +59,34 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
+
+        public ContactHelper Remove(int v)
+        {
+            SelectContact(v);
+            RemovalContact();
+            ConfirmRemoval();
+            return this;
+        }
+
+        public ContactHelper ConfirmRemoval()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper RemovalContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int v)
+        {
+            string xpath = "(//input[@name='selected[]'])[" + v + "]";
+            driver.FindElement(By.XPath(xpath)).Click();
+            return this;
+        }
+
+
     }
 }
