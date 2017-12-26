@@ -28,6 +28,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(int v)
+        {
+            SelectContact(v);
+            RemovalContact();
+            ConfirmRemoval();
+            return this;
+        }
+
         public ContactHelper UpdateContactForm()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -57,14 +65,6 @@ namespace WebAddressbookTests
         public ContactHelper GoToAddNewPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
-            return this;
-        }
-
-        public ContactHelper Remove(int v)
-        {
-            SelectContact(v);
-            RemovalContact();
-            ConfirmRemoval();
             return this;
         }
 
