@@ -9,9 +9,15 @@ namespace WebAddressbookTests
 
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("Ira", "Petrova");
+            int numberOfElement = 1;
+            if (app.Contacts.IsContactPresent(numberOfElement) == false)
+            {
+                ContactData contact = new ContactData("Contact", "Modify");
+                app.Contacts.Create(contact);
+            }
 
-            app.Contacts.Modify(1, newData);
+            ContactData newData = new ContactData("Ira", "Petrova");
+            app.Contacts.Modify(numberOfElement, newData);
         }
     }
 }

@@ -9,11 +9,23 @@ namespace WebAddressbookTests
 
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("zzz");
-            newData.Header = null;
-            newData.Footer = null;
+            {
+                app.Navigator.GoToGroupPage();
+                int numberOfGroup = 1;
+                if (app.Groups.IsGroupPresent(numberOfGroup) == false)
+                {
+                    GroupData group = new GroupData("GroupTest");
+                    app.Groups.Create(group);
+                }
 
-            app.Groups.Modify(1, newData);
+
+                GroupData newData = new GroupData("123");
+                newData.Header = null;
+                newData.Footer = null;
+
+                app.Groups.Modify(numberOfGroup, newData);
+            }
         }
     }
 }
+

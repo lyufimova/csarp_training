@@ -12,8 +12,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Create(ContactData contact)
         {
-            manager.Navigator.GoToGroupPage();
-
+            manager.Navigator.GoToHomepage();
             GoToAddNewPage();
             FillContactForm(contact);
             SubmitContactForm();
@@ -22,6 +21,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int v, ContactData newData)
         {
+            manager.Navigator.GoToHomepage();
             EditContact(v);
             FillContactForm(newData);
             UpdateContactForm();
@@ -30,6 +30,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int v)
         {
+            manager.Navigator.GoToHomepage();
             SelectContact(v);
             RemovalContact();
             ConfirmRemoval();
@@ -87,6 +88,10 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool IsContactPresent(int v)
+        {
+            return IsElementPresent(By.XPath("//tr[@name='entry'][" + v + "]"));
+        }
 
     }
 }

@@ -10,10 +10,7 @@ namespace WebAddressbookTests
         {
            
             ContactData contact = new ContactData("Anna", "Ivanova");
-            app.Contacts.Create(contact);
-               
-            app.Navigator.GoToHomepage();
-            app.Auth.Logout();
+            app.Contacts.Create(contact); 
         }
     }
 }
