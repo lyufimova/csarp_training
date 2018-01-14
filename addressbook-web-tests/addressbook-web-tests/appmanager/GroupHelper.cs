@@ -1,5 +1,5 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -42,8 +42,7 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int v)
         {
-            string xpath = "(//input[@name='selected[]'])[" + v + "]";
-            driver.FindElement(By.XPath(xpath)).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (v + 1) + "]")).Click();
             return this;
         }
 
@@ -93,7 +92,19 @@ namespace WebAddressbookTests
 
         public bool IsGroupPresent(int v)
         {
-            return IsElementPresent(By.XPath("//span[@class = 'group'][" + v + "]"));
+            return IsElementPresent(By.XPath("//span[@class = 'group'][" + (v + 1) + "]"));
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+            return groups;
         }
     }
 }

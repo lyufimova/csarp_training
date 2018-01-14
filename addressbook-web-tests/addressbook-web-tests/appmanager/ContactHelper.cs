@@ -1,5 +1,5 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -45,7 +45,7 @@ namespace WebAddressbookTests
 
         public ContactHelper EditContact(int v)
         {
-            string xpath = "(//img[@title='Edit'])[" + v + "]";
+            string xpath = "(//img[@title='Edit'])[" + (v + 1) + "]";
             driver.FindElement(By.XPath(xpath)).Click();
             return this;
         }
@@ -83,15 +83,27 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int v)
         {
-            string xpath = "(//input[@name='selected[]'])[" + v + "]";
-            driver.FindElement(By.XPath(xpath)).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (v + 1) + "]")).Click();
             return this;
         }
 
         public bool IsContactPresent(int v)
         {
-            return IsElementPresent(By.XPath("//tr[@name='entry'][" + v + "]"));
+            return IsElementPresent(By.XPath("//tr[@name='entry'][" + (v + 1) + "]"));
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomepage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                IWebElement lastName = element.FindElement(By.XPath("td[2]"));
+                IWebElement firstName = element.FindElement(By.XPath("td[3]"));
+                contacts.Add(new ContactData(firstName.Text, lastName.Text));
+            }
+            return contacts;
+        }
     }
 }
