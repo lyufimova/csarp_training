@@ -21,6 +21,10 @@ namespace WebAddressbookTests
 
             ContactData newData = new ContactData("Ira", "Petrova");
             app.Contacts.Modify(numberOfElement, newData);
+            //Добавлен переход на страницу, так как страница не успевает открыться
+            app.Navigator.GoToHomepage();
+
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].FirstName = newData.FirstName;

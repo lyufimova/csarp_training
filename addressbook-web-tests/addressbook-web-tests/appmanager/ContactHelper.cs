@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace WebAddressbookTests
@@ -53,6 +54,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactForm()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
         public ContactHelper FillContactForm(ContactData contact)
@@ -72,12 +74,14 @@ namespace WebAddressbookTests
         public ContactHelper ConfirmRemoval()
         {
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper RemovalContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -92,18 +96,38 @@ namespace WebAddressbookTests
             return IsElementPresent(By.XPath("//tr[@name='entry'][" + (v + 1) + "]"));
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomepage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                IWebElement lastName = element.FindElement(By.XPath("td[2]"));
-                IWebElement firstName = element.FindElement(By.XPath("td[3]"));
-                contacts.Add(new ContactData(firstName.Text, lastName.Text));
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomepage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    IWebElement lastName = element.FindElement(By.XPath("td[2]"));
+                    IWebElement firstName = element.FindElement(By.XPath("td[3]"));
+                    contactCache.Add(new ContactData(firstName.Text, lastName.Text));
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
+        }
+
+        public int GetContactsCount()
+        {
+            return driver.FindElements(By.CssSelector("tr[name='entry']")).Count;
         }
     }
 }
+
+
+ 
+       
+            
+            
+              
+               
+               
+    
