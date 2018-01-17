@@ -11,6 +11,8 @@ namespace WebAddressbookTests
         {
             GroupData group = new GroupData("GGG");
             group.Header = "ddd";
+            // нужно экранировать \\ и ''
+            // @ 
             group.Footer = "fff";
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();

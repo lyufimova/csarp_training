@@ -31,10 +31,18 @@ namespace WebAddressbookTests
                 Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
                 List<GroupData> newGroups = app.Groups.GetGroupList();
-                oldGroups[0].Name = newData.Name;
+                oldGroups[numberOfGroup].Name = newData.Name;
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData group in newGroups)
+                {
+                    if (group.Id == oldGroups[numberOfGroup].Id)
+                    {
+                        Assert.AreEqual(newData.Name, group.Name);
+                    }
+                }
             }
         }
     }
