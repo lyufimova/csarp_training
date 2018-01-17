@@ -7,6 +7,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetails;
 
         public ContactData(string firstName, string lastName)
         {
@@ -16,6 +17,13 @@ namespace WebAddressbookTests
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string MiddleName { get; set; }
+        public string NickName { get; set; }
+
+
+        public string Title { get; set; }
+        public string Company { get; set; }
+        public string Fax { get; set; }
 
         public string Address { get; set; }
         public string HomePhone { get; set; }
@@ -26,6 +34,8 @@ namespace WebAddressbookTests
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+
+        public string HomePage { get; set; }
 
         public string AllPhones
         {
@@ -56,12 +66,49 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Email+ "\r\n" + Email2+ "\r\n" + Email3).Trim();
+                    return (Email + "\r\n" + Email2 + "\r\n" + Email3).Trim();
                 }
             }
             set
             {
                 allEmails = value;
+            }
+        }
+
+
+        public string AllDetails
+        {
+            get
+            {
+                if (allDetails != null)
+                {
+                    return allDetails;
+                }
+                else
+                {
+                    return (
+                        FirstName + " " +
+                        MiddleName + " " +
+                        LastName + "\r\n" +
+                        NickName + "\r\n\r\n" +
+                        Title + "\r\n" +
+                        Company + "\r\n" +
+                        Address + "\r\n\r\n" +
+                        "H: " + HomePhone + "\r\n" +
+                        "M: " + MobilePhone + "\r\n" +
+                        "W: " + WorkPhone + "\r\n" +
+                        "F: " + Fax + "\r\n\r\n" +
+                        AllEmails + "\r\n" +
+                        "Homepage:\r\n" + HomePage + "\r\n\r\n\r\n\r\n" +
+                        "P: " + SecondHomePhone
+
+
+                        ).Trim();
+                }
+            }
+            set
+            {
+                allDetails = value;
             }
         }
 
