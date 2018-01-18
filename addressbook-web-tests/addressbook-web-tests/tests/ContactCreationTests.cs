@@ -6,12 +6,22 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
-        {
-           
-            ContactData contact = new ContactData("Anna", "Ivanova");
 
+        public static IEnumerable<ContactData> RandomContactDataProvider()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30)));
+            }
+            return contacts;
+        }
+
+
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
             app.Contacts.Create(contact);
             //Добавлен переход на страницу, так как страница не успевает открыться

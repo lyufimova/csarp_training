@@ -6,9 +6,25 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupModificationTests : AuthTestBase
     {
-        [Test]
 
-        public void GroupModificationTest()
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(30))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+
+                });
+            }
+            return groups;
+        }
+
+
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupModificationTest(GroupData newData)
         {
             {
                 app.Navigator.GoToGroupPage();
@@ -20,9 +36,6 @@ namespace WebAddressbookTests
                 }
 
 
-                GroupData newData = new GroupData("123");
-                newData.Header = null;
-                newData.Footer = null;
 
                 List<GroupData> oldGroups = app.Groups.GetGroupList();
 
