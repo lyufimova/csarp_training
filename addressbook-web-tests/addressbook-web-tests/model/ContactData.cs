@@ -47,7 +47,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(SecondHomePhone)).Trim();
+                    return (CleanUpPhone(HomePhone) + CleanUpPhone(MobilePhone) + CleanUpPhone(WorkPhone) + CleanUpPhone(SecondHomePhone)).Trim();
                 }
             }
             set
@@ -66,7 +66,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Email + "\r\n" + Email2 + "\r\n" + Email3).Trim();
+                    return (CleanUp(Email) + CleanUp (Email2) + CleanUp (Email3)).Trim();
                 }
             }
             set
@@ -114,7 +114,7 @@ namespace WebAddressbookTests
 
 
 
-        private string CleanUp(string phone)
+        private string CleanUpPhone(string phone)
         {
             if (phone == null || phone == "")
             {
@@ -123,6 +123,19 @@ namespace WebAddressbookTests
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
             //return phone.Replace(" ","").Replace("-","").Replace("(","").Replace(")", "")+ "\r\n";
         }
+
+
+
+        private string CleanUp(string value)
+        {
+            if (value == null || value == "")
+            {
+                return "";
+            }
+            return value + "\r\n";
+            //return phone.Replace(" ","").Replace("-","").Replace("(","").Replace(")", "")+ "\r\n";
+        }
+
 
         public bool Equals(ContactData other)
         {
