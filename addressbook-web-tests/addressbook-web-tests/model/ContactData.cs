@@ -66,7 +66,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(Email) + CleanUp (Email2) + CleanUp (Email3)).Trim();
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
                 }
             }
             set
@@ -86,21 +86,65 @@ namespace WebAddressbookTests
                 }
                 else
                 {
+                    string firstName;
+
+                    if (FirstName == null || FirstName == "")
+                        firstName = "";
+                    else firstName = FirstName + " ";
+
+                    string middleName;
+
+                    if (MiddleName == null || MiddleName == "")
+                        middleName = "";
+                    else middleName = MiddleName + " ";
+
+                    string homePhone;
+
+                    if (HomePhone == null || HomePhone == "")
+                        homePhone = "";
+                    else homePhone = "H: " + CleanUp(HomePhone);
+
+                    string mobilePhone;
+
+                    if (MobilePhone == null || MobilePhone == "")
+                        mobilePhone = "";
+                    else mobilePhone = "M: " + CleanUp(MobilePhone);
+
+                    string workPhone;
+
+                    if (WorkPhone == null || WorkPhone == "")
+                        workPhone = "";
+                    else workPhone = "W: " + CleanUp(WorkPhone);
+
+                    string fax;
+
+                    if (Fax == null || Fax == "")
+                        fax = "";
+                    else fax = "F: " + CleanUp(Fax);
+
+                    string secondHomePhone;
+
+                    if (SecondHomePhone == null || SecondHomePhone == "")
+                        secondHomePhone = "";
+                    else secondHomePhone = "P: " + CleanUp(SecondHomePhone);
+
+                    string homePage;
+
+                    if (HomePage == null || HomePage == "")
+                        homePage = "";
+                    else homePage = "Homepage:\r\n" + CleanUp(HomePage);
+
+
                     return (
-                        FirstName + " " +
-                        MiddleName + " " +
-                        LastName + "\r\n" +
-                        NickName + "\r\n\r\n" +
-                        Title + "\r\n" +
-                        Company + "\r\n" +
-                        Address + "\r\n\r\n" +
-                        "H: " + HomePhone + "\r\n" +
-                        "M: " + MobilePhone + "\r\n" +
-                        "W: " + WorkPhone + "\r\n" +
-                        "F: " + Fax + "\r\n\r\n" +
-                        AllEmails + "\r\n" +
-                        "Homepage:\r\n" + HomePage + "\r\n\r\n\r\n\r\n" +
-                        "P: " + SecondHomePhone
+                       CleanUp(firstName + middleName + LastName) +
+                       CleanUp(NickName) +
+                       CleanUp(Title) +
+                       CleanUp(Company) +
+                       CleanUp(Address) + "\r\n" +
+                       CleanUp (homePhone + mobilePhone + workPhone + fax) +
+                       AllEmails + "\r\n" +
+                       homePage + "\r\n\r\n\r\n" +
+                       secondHomePhone
 
 
                         ).Trim();
@@ -111,8 +155,6 @@ namespace WebAddressbookTests
                 allDetails = value;
             }
         }
-
-
 
         private string CleanUpPhone(string phone)
         {

@@ -203,12 +203,12 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomepage();
             ShowContactDetails(index);
-            string allDetails = driver.FindElement(By.Id("content")).Text;
+            string content = driver.FindElement(By.Id("content")).Text;
 
 
             return new ContactData("", "")
             {
-                AllDetails = allDetails,
+                AllDetails = content,
             };
         }
 
