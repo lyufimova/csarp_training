@@ -6,10 +6,16 @@ namespace WebAddressbookTests
     {
      
 
+        public GroupData()
+        {
+        }
+
         public GroupData(string name)
         {
             Name = name;
         }
+
+
 
         public bool Equals(GroupData other)
         {

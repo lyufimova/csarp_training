@@ -9,6 +9,10 @@ namespace WebAddressbookTests
         private string allEmails;
         private string allDetails;
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
@@ -141,7 +145,7 @@ namespace WebAddressbookTests
                        CleanUp(Title) +
                        CleanUp(Company) +
                        CleanUp(Address) + "\r\n" +
-                       CleanUp (homePhone + mobilePhone + workPhone + fax) +
+                       CleanUp(homePhone + mobilePhone + workPhone + fax) +
                        AllEmails + "\r\n" +
                        homePage + "\r\n\r\n\r\n" +
                        secondHomePhone
