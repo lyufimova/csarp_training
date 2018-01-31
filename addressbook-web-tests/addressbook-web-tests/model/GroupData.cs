@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using LinqToDB.Mapping;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "group_list")]
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
-     
+
 
         public GroupData()
         {
@@ -38,7 +42,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name=" + Name +"\nheader= " + Header + "\nfooter= " + Footer;
+            return "name=" + Name + "\nheader= " + Header + "\nfooter= " + Footer;
         }
 
         public int CompareTo(GroupData other)
@@ -50,53 +54,35 @@ namespace WebAddressbookTests
             return Name.CompareTo(other.Name);
         }
 
-
+        [Column(Name = "group_name")]
         public string Name { get; set; }
 
+        [Column(Name = "group_header")]
         public string Header { get; set; }
 
+        [Column(Name = "group_footer")]
         public string Footer { get; set; }
 
+        [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
-        /*
-         public string Name
-          {
-             get
-             {
-                 return name;
-             }
-             set
-             {
-                 name = value;
-             }
-         }
 
-         public string Header
-         {
-             get
-             {
-                 return header;
-             }
-             set
-             {
-                 header = value;
-             }
-         }
+        public static List<GroupData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups select g).ToList();
+            }
+        }
 
-         public string Footer
-         {
-             get
-             {
-                 return footer;
-             }
-             set
-             {
-                 footer = value;
-             }
-         }
-
-     */
-
+        public List<ContactData> GetContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts
+                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id)
+                        select c).Distinct().ToList();
+            }
+        }
 
     }
 }

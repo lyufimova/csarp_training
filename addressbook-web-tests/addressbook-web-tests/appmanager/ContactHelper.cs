@@ -41,6 +41,15 @@ namespace WebAddressbookTests
         }
 
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomepage();
+            SelectContact(contact.Id);
+            RemovalContact();
+            ConfirmRemoval();
+            return this;
+        }
+
         public ContactHelper UpdateContactForm()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -100,6 +109,15 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (v + 1) + "]")).Click();
             return this;
         }
+
+        public ContactHelper SelectContact(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            return this;
+        }
+
+
+
 
         public bool IsContactPresent(int v)
         {

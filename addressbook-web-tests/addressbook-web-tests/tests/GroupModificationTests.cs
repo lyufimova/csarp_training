@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
 
         public static IEnumerable<GroupData> RandomGroupDataProvider()
@@ -22,7 +22,6 @@ namespace WebAddressbookTests
             return groups;
         }
 
-
         [Test, TestCaseSource("RandomGroupDataProvider")]
         public void GroupModificationTest(GroupData newData)
         {
@@ -35,15 +34,14 @@ namespace WebAddressbookTests
                     app.Groups.Create(group);
                 }
 
+                List<GroupData> oldGroups = GroupData.GetAll();
+                GroupData toBeModify = oldGroups[numberOfGroup];
 
-
-                List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-                app.Groups.Modify(numberOfGroup, newData);
+                app.Groups.Modify(toBeModify, newData);
 
                 Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
-                List<GroupData> newGroups = app.Groups.GetGroupList();
+                List<GroupData> newGroups = GroupData.GetAll();
                 oldGroups[numberOfGroup].Name = newData.Name;
                 oldGroups.Sort();
                 newGroups.Sort();

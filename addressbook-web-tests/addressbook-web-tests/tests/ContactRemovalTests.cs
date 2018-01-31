@@ -19,18 +19,25 @@ namespace WebAddressbookTests
                 app.Contacts.Create(contact);
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[numberOfElement];
 
-            app.Contacts.Remove(numberOfElement);
-            //Добавлен переход на страницу, так как страница не успевает открыться
+            app.Contacts.Remove(toBeRemoved);
             app.Navigator.GoToHomepage();
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactsCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts.RemoveAt(numberOfElement);
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContacts.Remove(toBeRemoved);
             Assert.AreEqual(oldContacts, newContacts);
+            foreach (ContactData contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
+
         }
 
     }
 }
+
+
