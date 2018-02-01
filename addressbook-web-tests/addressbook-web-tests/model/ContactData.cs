@@ -35,7 +35,7 @@ namespace WebAddressbookTests
         public string Id { get; set; }
 
         [Column(Name = "deprecated")]
-        public string deprecated { get; set; }
+        public string Deprecated { get; set; }
 
 
         public string Title { get; set; }
@@ -240,7 +240,7 @@ namespace WebAddressbookTests
             using (AddressBookDB db = new AddressBookDB())
 
             {
-                return (from c in db.Contacts.Where (c => c.deprecated == "0000") select c).ToList();
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             }
         }
 

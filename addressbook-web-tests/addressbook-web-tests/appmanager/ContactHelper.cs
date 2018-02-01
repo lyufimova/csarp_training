@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -20,7 +21,6 @@ namespace WebAddressbookTests
             SubmitContactForm();
             return this;
         }
-
 
         public ContactHelper Modify(int v, ContactData newData)
         {
@@ -115,8 +115,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
-
-
 
 
         public bool IsContactPresent(int v)
@@ -238,5 +236,35 @@ namespace WebAddressbookTests
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomepage();
+            CleanGroupFilteter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void CleanGroupFilteter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+     
+
+    
     }
 }
