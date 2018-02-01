@@ -240,7 +240,7 @@ namespace WebAddressbookTests
         public void AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.GoToHomepage();
-            CleanGroupFilteter();
+            CleanGroupFilter();
             SelectContact(contact.Id);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
@@ -248,7 +248,7 @@ namespace WebAddressbookTests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
-        public void CleanGroupFilteter()
+        public void CleanGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
@@ -263,8 +263,27 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("add")).Click();
         }
 
-     
 
-    
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomepage();
+            SetGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            CommitRemoveContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+               .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void SetGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
+        private void CommitRemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        
     }
 }
